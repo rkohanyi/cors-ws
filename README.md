@@ -43,6 +43,20 @@ Things to note:
 - fetch is successful
 - Hardcoding the cross origin to a specific thing like localhost:5173 is bad practice, externalize this configuration in production
 
+### Scenario 3 - Proxying instead of CORS
+
+![Scenario 3](scenario-03.png)
+
+- Remove/comment out CORS config on backends
+- Uncomment proxy config in `vite.config.js` (see [more on this here](https://vite.dev/config/server-options#server-proxy))
+- Rewrite `URL` in `App.jsx` to `/api/hi`
+- Restart the frontend dev server
+- Visit http://localhost:5173, open devtools
+
+Things to note:
+- In `fetch` we use a relative URL, `/api/hi`, not an absolute URL
+- The proxy config strips the leading `/api` this is not a requirement, but some frameworks rely on this by default (not Vite)
+
 ## The steps to create this repo's contents
 
 - Create a sample frontend project with `npm create vite@latest` (using [NPM](https://www.npmjs.com/)) choose React and JavaScript, save this in the `frontend-react` folder
@@ -51,20 +65,6 @@ Things to note:
 - Add `GET /hi` that returns some fixed strings to backend projects
 - Add a fetch on page load to http://localhost:8080/hi to the frontend project
 - Configure both backends to use port 8080 (Spring uses that by default, rewrite the ASP project's `launchSettings.json` to use port 8080 for HTTP)
-
-### Scenario 3 - Proxying instead of CORS
-
-![Scenario 3](scenario-03.png)
-
-- Remove/comment out CORS config on backends
-- Uncomment proxy config in `vice.config.js` (see [more on this here](https://vite.dev/config/server-options#server-proxy))
-- Rewrite `URL` in `App.jsx` to `/api/hi`
-- Restart the frontend dev server
-- Visit http://localhost:5173, open devtools
-
-Things to note:
-- In `fetch` we use a relative URL, `/api/hi`, not an absolute URL
-- The proxy config strips the leading `/api` this is not a requirement, but some frameworks rely on this by default (not Vite)
 
 ## Mermaid chart sources for diagrams
 
